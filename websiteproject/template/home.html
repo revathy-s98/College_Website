@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Form</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container"> <p><h1></h1></p>
+    <div class="card">
+        <div class="card-header">
+            Registration Form
+        </div>
+        <div class="card-body">
+            <form action="create_view" method="post" id="MemberForm" data-courses-url="{% url 'ajax_load_courses' %}" class="form-horizontal" role="form">
+
+                Name:<br>
+                <input type="text" name="name" placeholder="Enter Your Name">
+                <br><br>
+<!--                Date of Birth:<br>-->
+<!--                <input type="date" name="date" placeholder="Enter Your DOB">-->
+<!--                <br><br>-->
+<!--                Age:<br>-->
+<!--                <input type="number" name="age" placeholder="Enter Your Age">-->
+<!--                <br><br>-->
+                Gender:<br>
+                <input type="radio" name="Female"/> Female <br>
+                <input type="radio" name="Male"/> Male<br>
+                <input type="radio" name="Others"/> Others<br><br>
+<!--                Phone Number:<br>-->
+<!--                <input type="number" name="phonenumber" placeholder="Enter Your Number">-->
+<!--                <br><br>-->
+<!--                Mail ID:<br>-->
+<!--                <input type="email" name="email" placeholder="Enter Your Email">-->
+<!--                <br><br>-->
+<!--                Address:<br>-->
+<!--                <input type="text" name="address" placeholder="Enter Your Address">-->
+<!--                <br><br>-->
+
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <label>
+                Purpose :<br>
+                </label>
+                <select>
+                <option value="Purpose">----------</option>
+                <option value="For Enquiry">For Enquiry</option>
+                <option value="For Admission">For Admission</option>
+                </select>
+                <br><br>
+                <label>
+                Materials Provide :<br>
+                </label><br>
+                <input type="radio" name="Note Book"/> Note Book <br>
+                <input type="radio" name="Pen"/> Pen<br>
+                <input type="radio" name="Exam Papers"/> Exam Papers<br>
+                <br><br>
+                <input type="submit" value="submit">
+
+
+<!--                <div >-->
+<!--                   <li>-->
+<!--                        <a class="" href="message"> <button style="background-color:#1569C7;" type="button">Submit</button></a>-->
+<!--                   </li>-->
+<!--                </div> <br>-->
+                    <br>
+                     <div >
+                          <li>
+                          <a class="" href="/"> <button style="background-color:#fecf6a;" type="button">Logout</button></a>
+                          </li>
+                     </div>
+
+            </form>
+        </div>
+      </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_department").change(function () {
+        const url = $("#MemberForm").attr("data-courses-url");  // get the url of the `load_courses` view
+        const departmentId = $(this).val();  // get the selected department ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /members/ajax/load-courses/ )
+            data: {
+                'department_id': departmentId       // GET parameters
+            },
+            success: function (data) {
+                $("#id_course").html(data);
+            }
+        });
+
+    });
+</script>
+</body>
+</html>
